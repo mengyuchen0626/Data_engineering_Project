@@ -1,0 +1,21 @@
+<HTML>
+    <BODY style="background-image:url(https://www.synergiafoundation.org/sites/default/files/Twitter-Background.jpg); filter:alpha(opacity=50); background-repeat:no-repeat;background-position: center 0;background-size: cover;">
+    
+    <form method="POST" action="">
+        <center>
+        <H1><p style="color:#FDFAFD";>Twitter Search </p ></H1> <br>
+     <H2><p style="color:#FDFAFD";>Please enter a sentence </p ></H2> 
+        <input type = "text" name= "text" style="width:400px; height:60px;"/> <br><br>
+        <input type="hidden" name="get_result"/> 
+        <input type = "submit" value="Submit"><br><br><br>
+        {% if text != '' %}
+            <p id=text style="color: #FDFAFD;">Similar Tweets Top 20:</p>
+            {% for x in result %}
+                <p style="color: #FDFAFD;">{{x}}</p>
+            {% endfor %}
+        {% endif %}      
+        </center>
+    </form>
+    
+    </BODY>
+    </HTML>
