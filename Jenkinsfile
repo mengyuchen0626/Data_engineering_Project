@@ -17,7 +17,7 @@ pipeline{
     }
     stage('Testing'){
       steps{
-        sh 'python stress_test.py'
+        sh 'python test.py'
       }
     }
     stage('Docker images down'){
