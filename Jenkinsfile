@@ -1,24 +1,11 @@
 pipeline{
   agent any
   stages {
-    stage('Build Flask app'){
-      steps{
-        script{
-          if(env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release'){
-            sh 'docker build -t project .'
-          }
-        }      
-      }
-    }
-    stage('Run docker images'){
-      parallel{
-        stage('Run Flask App'){
-          steps{
-            script{
-              if(env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'release'){
-                sh 'docker-compose up'
-              }  
-            }
+    stage('Build app'){
+      stage('Run Flask App'){
+        steps{
+          script{
+            sh 'docker-compose up'
           }
         }
       }
@@ -26,31 +13,29 @@ pipeline{
     stage('Testing'){
       steps{
         script{
-          if(env.BRANCH_NAME == 'develop'){
-            sh 'python test.py'
-          }
-          else if(env.BRANCH_NAME == 'release'){
-            echo 'release-specific test'
-          }
+          echo 'release-specific test'
         }
       }
     }
     stage('Docker images down'){
       steps{
         script{
-          if(env.BRANCH_NAME == 'develop'){
-            sh 'docker rm -f project_c'
-            sh 'docker rmi -f project'
-          }
+          sh 'docker rm -f project_c'
+          sh 'docker rmi -f project'
         }
       }
     }
     stage('Creating release branch'){
       steps{
         script{
-          if(env.BRANCH_NAME == 'develop'){
-            echo 'branch into release'
-          }
+          echo 'branch into release'
+        }
+      }
+    }
+    stage('Going live'){
+      steps{
+        script{
+          echo 'Merge with main'
         }
       }
     }
